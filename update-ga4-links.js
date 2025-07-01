@@ -62,13 +62,16 @@ function updateGA4Links(measurementId) {
         updateLinksWithParameters(clientId, sessionId);
 
         window.addEventListener('beforeunload', (event) => {
+          console.log(
+            '[GA4] beforeunload interception: URL adjusted with parameters.'
+          );
           try {
             const url = new URL(window.location.href);
             url.searchParams.set('client_id', clientId);
             url.searchParams.set('session_id', sessionId);
             window.location.href = url.toString();
           } catch (e) {
-            console.warn('[GA4] Não foi possível ajustar a URL de saída:', e);
+            console.warn('[GA4] Could not adjust exit URL:', e);
           }
         });
       })
