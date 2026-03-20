@@ -14,10 +14,6 @@ function updateGA4Links(measurementId) {
     return match ? decodeURIComponent(match[1]) : null;
   }
 
-  function getFromStorage(key) {
-    return localStorage.getItem(key);
-  }
-
   function saveToStorage(key, value) {
     if (value) {
       localStorage.setItem(key, value);
@@ -41,10 +37,10 @@ function updateGA4Links(measurementId) {
 
   function collectParams() {
     return {
-      client_id: getFromStorage('client_id'),
-      session_id: getFromStorage('session_id'),
-      fbp: getCookie('_fbp') || getFromStorage('fbp'),
-      fbc: getCookie('_fbc') || getFromStorage('fbc')
+      client_id: localStorage.getItem('client_id'),
+      session_id: localStorage.getItem('session_id'),
+      fbp: getCookie('_fbp') || localStorage.getItem('fbp'),
+      fbc: getCookie('_fbc') || localStorage.getItem('fbc')
     };
   }
 
@@ -113,8 +109,8 @@ function updateGA4Links(measurementId) {
       retries++;
       var params = collectParams();
       var changed =
-        params.fbp !== getFromStorage('fbp') ||
-        params.fbc !== getFromStorage('fbc');
+        params.fbp !== localStorage.getItem('fbp') ||
+        params.fbc !== localStorage.getItem('fbc');
       if (changed) {
         persistParams(params);
         updateLinks(params);
